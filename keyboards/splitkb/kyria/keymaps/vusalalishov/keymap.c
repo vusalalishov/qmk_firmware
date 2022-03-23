@@ -6,36 +6,29 @@ enum layers {
 	_DEV, 
 	_NUM,
 	_SYM,
-};
-
-enum {
-	TD_QUOT_DOULE,
+	_FUNC,
 };
 
 // Aliases for readability
 #define QWERTY        DF(_QWERTY)
 #define WORKMAN       DF(_WORKMAN)
 
-#define MT_A_LSFT    MT(MOD_LSFT, KC_A)
-#define MT_SCLN_RSFT MT(MOD_RSFT, KC_SCLN)
 #define MT_CMD_SPC   MT(MOD_LGUI, KC_SPC)
 
 #define MO_DEV       MO(_DEV)
+#define MO_NUM       MO(_NUM)
 
-#define LT_NUM_ENT       LT(_NUM, KC_ENT)
+#define LT_DEV_ENT       LT(_DEV, KC_ENT)
 #define LT_SYM_F         LT(_SYM, KC_F)
-
-// Tap dance
-#define TD_QUOT      TD(TD_QUOT_DOULE)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT(
-	     KC_ESC  , KC_Q      , KC_W , KC_E    , KC_R     , KC_T    ,                      /**/                            KC_Y    , KC_U    , KC_I   , KC_O    , KC_P         , KC_BSPC ,
-	     KC_TAB  , MT_A_LSFT , KC_S , KC_D    , LT_SYM_F , KC_G    ,                      /**/                            KC_H    , KC_J    , KC_K   , KC_L    , MT_SCLN_RSFT , TD_QUOT ,
-	     KC_RGUI , KC_Z      , KC_X , KC_C    , KC_V     , KC_B    , XXXXXXX  , XXXXXXX , /**/ XXXXXXX    , XXXXXXX     , KC_N    , KC_M    , KC_DOT , KC_UNDS , _______      , XXXXXXX ,
-                                      XXXXXXX , XXXXXXX  , KC_LALT , KC_LCTRL , MO_DEV  , /**/ LT_NUM_ENT , MT_CMD_SPC  , XXXXXXX , XXXXXXX , WORKMAN
+	     KC_ESC  , KC_Q , KC_W , KC_E    , KC_R     , KC_T    ,                      /**/                           KC_Y   , KC_U    , KC_I   , KC_O    , KC_P    , KC_BSPC ,
+	     KC_TAB  , KC_A , KC_S , KC_D    , LT_SYM_F , KC_G    ,                      /**/                           KC_H   , KC_J    , KC_K   , KC_L    , KC_SCLN , KC_QUOT ,
+	     KC_RALT , KC_Z , KC_X , KC_C    , KC_V     , KC_B    , XXXXXXX  , XXXXXXX , /**/ XXXXXXX    , XXXXXXX    , KC_N   , KC_M    , KC_DOT , KC_UNDS , KC_SLSH , XXXXXXX ,
+                                 XXXXXXX , XXXXXXX  , KC_LSFT , KC_LCTRL , MO_DEV  , /**/ LT_DEV_ENT , MT_CMD_SPC , MO_NUM , KC_LALT , WORKMAN
     ),
 
     [_WORKMAN] = LAYOUT(
@@ -53,16 +46,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NUM] = LAYOUT(
-	     XXXXXXX , XXXXXXX , KC_3    , KC_2    , KC_1    , XXXXXXX ,                     /**/                     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX  , XXXXXXX , _______ ,
-	     XXXXXXX , KC_0    , KC_6    , KC_5    , KC_4    , XXXXXXX ,                     /**/                     KC_LEFT , KC_DOWN , KC_UP   , KC_RIGHT , XXXXXXX , XXXXXXX ,
-	     XXXXXXX , XXXXXXX , KC_9    , KC_8    , KC_7    , XXXXXXX , XXXXXXX , XXXXXXX , /**/ XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX ,
-                                       XXXXXXX , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______ , _______ , XXXXXXX
+	     _______ , _______ , _______ , _______ , _______ , _______  ,                     /**/                     _______ , KC_1   , KC_2 , KC_3 , KC_0    , _______ ,
+	     _______ , _______ , KC_LEFT , KC_UP   , KC_DOWN , KC_RIGHT ,                     /**/                     _______ , KC_4   , KC_5 , KC_6 , _______ , _______ ,
+	     _______ , _______ , _______ , _______ , _______ , _______  , _______ , _______ , /**/ _______ , _______ , _______ , KC_7   , KC_8 , KC_9 , _______ , _______ ,
+                                       _______ , _______ , _______  , _______ , _______ , /**/ _______ , _______ , _______ , _______ , _______
     ),
+
+    [_FUNC] = LAYOUT(
+	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     _______ , KC_F1   , KC_F2 , KC_F3 , KC_F10 , _______ ,
+	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     _______ , KC_F4   , KC_F5 , KC_F6 , KC_F11 , _______ ,
+	     _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______ , KC_F7   , KC_F8 , KC_F9 , KC_F12 , _______ ,
+                                       _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______ , _______ , _______
+     ),
 
     [_SYM] = LAYOUT(
 	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     LGUI(KC_LEFT)  , KC_LCBR , KC_RCBR , KC_MINS , KC_SLSH , _______ ,
 	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     LGUI(KC_RIGHT) , KC_LPRN , KC_RPRN , KC_COMM , KC_COLN , _______ ,
-	     _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______        , KC_LBRC , KC_RBRC , _______ , _______ , _______ ,
+	     _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , LGUI(KC_GRV)   , KC_LBRC , KC_RBRC , _______ , _______ , _______ ,
                                        _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______        , _______ , _______
     ),
 
@@ -72,10 +72,5 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	//      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
     //                                    _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______ , _______ , _______
     // ),
-};
-
-// Tap dance definitions
-qk_tap_dance_action_t tap_dance_actions[] = {
-	[TD_QUOT_DOULE] = ACTION_TAP_DANCE_DOUBLE(KC_DQUO, KC_QUOT),
 };
 
