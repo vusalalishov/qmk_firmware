@@ -3,7 +3,8 @@
 enum layers {
     _QWERTY = 0,
 	_WORKMAN,
-	_DEV, 
+	_DEV_LEFT, 
+	_DEV_RIGHT, 
 	_NUM,
 	_SYM,
 	_FUNC,
@@ -19,19 +20,20 @@ enum layers {
 #define MO_DEV       MO(_DEV)
 #define MO_NUM       MO(_NUM)
 
-#define LT_DEV_ENT          LT(_DEV, KC_ENT)
 #define LT_SYM_F            LT(_SYM, KC_F)
 #define LT_NUM_A            LT(_NUM, KC_A)
-#define LT_NAV_SCLN         LT(_NAV, KC_SCLN)
+#define LT_NAV_S            LT(_NAV, KC_S)
+#define LT_DEV_D            LT(_DEV_RIGHT, KC_D)
+#define LT_DEV_SCLN         LT(_DEV_LEFT, KC_SCLN)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT(
-	     KC_ESC  , KC_Q     , KC_W , KC_E    , KC_R     , KC_T    ,                      /**/                           KC_Y    , KC_U    , KC_I   , KC_O    , KC_P        , KC_BSPC ,
-	     KC_TAB  , LT_NUM_A , KC_S , KC_D    , LT_SYM_F , KC_G    ,                      /**/                           KC_H    , KC_J    , KC_K   , KC_L    , LT_NAV_SCLN , KC_DQUO ,
-	     KC_RALT , KC_Z     , KC_X , KC_C    , KC_V     , KC_B    , XXXXXXX  , XXXXXXX , /**/ XXXXXXX    , XXXXXXX    , KC_N    , KC_M    , KC_DOT , KC_UNDS , KC_SLSH     , XXXXXXX ,
-                                     XXXXXXX , XXXXXXX  , KC_LALT , KC_LCTRL , KC_LSFT , /**/ LT_DEV_ENT , MT_CMD_SPC , XXXXXXX , XXXXXXX , WORKMAN
+	     KC_ESC  , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T    ,                      /**/                        KC_Y    , KC_U    , KC_I   , KC_O    , KC_P        , KC_BSPC ,
+	     KC_TAB  , LT_NUM_A , LT_NAV_S , LT_DEV_D , LT_SYM_F , KC_G    ,                      /**/                        KC_H    , KC_J    , KC_K   , KC_L    , LT_DEV_SCLN , KC_QUOT ,
+	     KC_RALT , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B    , XXXXXXX  , XXXXXXX , /**/ XXXXXXX , XXXXXXX    , KC_N    , KC_M    , KC_DOT , KC_UNDS , KC_SLSH     , XXXXXXX ,
+                                         XXXXXXX  , XXXXXXX  , KC_LALT , KC_LCTRL , KC_LSFT , /**/ KC_ENT  , MT_CMD_SPC , XXXXXXX , XXXXXXX , WORKMAN
     ),
 
     [_WORKMAN] = LAYOUT(
@@ -41,10 +43,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______ , _______ , QWERTY
     ),
 
-    [_DEV] = LAYOUT(
-	     XXXXXXX , XXXXXXX , KC_HASH , KC_AT   , KC_EXLM , XXXXXXX ,                     /**/                     KC_PIPE , KC_LT   , KC_GT   , KC_GRV  , XXXXXXX , _______ ,
-	     XXXXXXX , KC_TILD , KC_CIRC , KC_PERC , KC_DLR  , XXXXXXX ,                     /**/                     KC_BSLS , KC_QUES , KC_PLUS , KC_EQL  , XXXXXXX , XXXXXXX ,
+    [_DEV_LEFT] = LAYOUT(
+	     XXXXXXX , XXXXXXX , KC_HASH , KC_AT   , KC_EXLM , XXXXXXX ,                     /**/                     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , _______ ,
+	     XXXXXXX , KC_TILD , KC_CIRC , KC_PERC , KC_DLR  , XXXXXXX ,                     /**/                     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
 	     XXXXXXX , XXXXXXX , XXXXXXX , KC_ASTR , KC_AMPR , XXXXXXX , XXXXXXX , XXXXXXX , /**/ XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+                                       XXXXXXX , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______ , _______ , XXXXXXX
+    ),
+
+    [_DEV_RIGHT] = LAYOUT(
+	     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,                     /**/                     KC_PIPE , KC_LT   , KC_GT   , KC_GRV  , XXXXXXX , _______ ,
+	     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,                     /**/                     KC_BSLS , KC_QUES , KC_PLUS , KC_EQL  , XXXXXXX , XXXXXXX ,
+	     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , /**/ XXXXXXX , XXXXXXX , XXXXXXX , KC_EXLM , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
                                        XXXXXXX , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______ , _______ , XXXXXXX
     ),
 
@@ -56,10 +65,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NAV] = LAYOUT(
-	     _______ , _______ , _______ , _______ , _______ , _______  ,                     /**/                     _______ , _______ , _______ , _______ , _______ , _______ ,
-	     _______ , _______ , KC_LEFT , KC_UP   , KC_DOWN , KC_RIGHT ,                     /**/                     _______ , _______ , _______ , _______ , _______ , _______ ,
-	     _______ , _______ , _______ , _______ , _______ , _______  , _______ , _______ , /**/ _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
-                                       _______ , _______ , _______  , _______ , _______ , /**/ _______ , _______ , _______ , _______ , _______
+	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     _______ , _______ , _______ , _______  , _______ , _______ ,
+	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     KC_LEFT , KC_DOWN , KC_UP   , KC_RIGHT , _______ , _______ ,
+	     _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______ , _______ , _______ , _______  , _______ , _______ ,
+                                       _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______ , _______ , _______
     ),
 
     [_FUNC] = LAYOUT(
@@ -67,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     _______ , KC_F4   , KC_F5 , KC_F6 , KC_F11 , _______ ,
 	     _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______ , KC_F7   , KC_F8 , KC_F9 , KC_F12 , _______ ,
                                        _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______ , _______ , _______
-     ),
+    ),
 
     [_SYM] = LAYOUT(
 	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     LGUI(KC_LEFT)  , KC_LCBR , KC_RCBR , KC_MINS , KC_SLSH , _______ ,
