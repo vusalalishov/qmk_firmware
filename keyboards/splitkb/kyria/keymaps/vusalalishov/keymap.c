@@ -30,10 +30,10 @@ enum layers {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT(
-	     KC_ESC  , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T    ,                      /**/                        KC_Y    , KC_U    , KC_I   , KC_O    , KC_P        , KC_BSPC ,
-	     KC_TAB  , LT_NUM_A , LT_NAV_S , LT_DEV_D , LT_SYM_F , KC_G    ,                      /**/                        KC_H    , KC_J    , KC_K   , KC_L    , LT_DEV_SCLN , KC_QUOT ,
-	     KC_RALT , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B    , XXXXXXX  , XXXXXXX , /**/ XXXXXXX , XXXXXXX    , KC_N    , KC_M    , KC_DOT , KC_UNDS , KC_SLSH     , XXXXXXX ,
-                                         XXXXXXX  , XXXXXXX  , KC_LALT , KC_LCTRL , KC_LSFT , /**/ KC_ENT  , MT_CMD_SPC , XXXXXXX , XXXXXXX , WORKMAN
+	     KC_ESC  , KC_Q     , KC_W     , KC_E       , KC_R     , KC_T    ,                      /**/                        KC_Y    , KC_U    , KC_I   , KC_O    , KC_P        , KC_BSPC ,
+	     KC_TAB  , LT_NUM_A , LT_NAV_S , LT_DEV_D   , LT_SYM_F , KC_G    ,                      /**/                        KC_H    , KC_J    , KC_K   , KC_L    , LT_DEV_SCLN , KC_QUOT ,
+	     KC_RALT , KC_Z     , KC_X     , KC_C       , KC_V     , KC_B    , XXXXXXX  , XXXXXXX , /**/ XXXXXXX , XXXXXXX    , KC_N    , KC_M    , KC_DOT , KC_UNDS , KC_SLSH     , XXXXXXX ,
+                                         KC_KB_MUTE , XXXXXXX  , KC_LALT , KC_LCTRL , KC_LSFT , /**/ KC_ENT  , MT_CMD_SPC , XXXXXXX , XXXXXXX , WORKMAN
     ),
 
     [_WORKMAN] = LAYOUT(
@@ -58,9 +58,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NUM] = LAYOUT(
-	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     _______ , KC_1   , KC_2 , KC_3 , KC_0    , _______ ,
-	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     _______ , KC_4   , KC_5 , KC_6 , _______ , _______ ,
-	     _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______ , KC_7   , KC_8 , KC_9 , _______ , _______ ,
+	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     KC_1    , KC_2    , KC_3    , KC_4    , KC_5    , _______ ,
+	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , _______ ,
+	     _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
                                        _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______ , _______ , _______
     ),
 
@@ -92,4 +92,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //                                    _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______ , _______ , _______
     // ),
 };
+
+
+#ifdef OLED_ENABLE
+oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_180; }
+bool oled_task_user(void) {
+    if (is_keyboard_master()) {
+		oled_write_P(PSTR("Primary here!\n\n"), false);
+    } else {
+        oled_write_P(PSTR("Secondary here!\n\n"), false);
+    }
+    return false;
+}
+#endif
 
