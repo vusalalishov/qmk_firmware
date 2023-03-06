@@ -22,19 +22,22 @@ enum layers {
 #define MO_NUM       MO(_NUM)
 
 #define LT_SYM_F            LT(_SYM, KC_F)
+#define LT_KITTY_G          LT(_SYM_KITTY, KC_G)
 #define LT_NUM_A            LT(_NUM, KC_A)
 #define LT_NAV_S            LT(_NAV, KC_S)
 #define LT_DEV_D            LT(_DEV_RIGHT, KC_D)
 #define LT_DEV_SCLN         LT(_DEV_LEFT, KC_SCLN)
+#define G_TAB_LEFT          LSFT(LCTL(KC_LEFT))
+#define G_TAB_RIGHT         LSFT(LCTL(KC_RIGHT))
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT(
-	     KC_ESC  , KC_Q     , KC_W     , KC_E       , KC_R     , KC_T    ,                      /**/                        KC_Y    , KC_U    , KC_I   , KC_O    , KC_P        , KC_BSPC ,
-	     KC_TAB  , LT_NUM_A , LT_NAV_S , LT_DEV_D   , LT_SYM_F , KC_G    ,                      /**/                        KC_H    , KC_J    , KC_K   , KC_L    , LT_DEV_SCLN , KC_QUOT ,
-	     KC_RALT , KC_Z     , KC_X     , KC_C       , KC_V     , KC_B    , XXXXXXX  , XXXXXXX , /**/ XXXXXXX , XXXXXXX    , KC_N    , KC_M    , KC_DOT , KC_UNDS , KC_SLSH     , XXXXXXX ,
-                                         KC_KB_MUTE , XXXXXXX  , KC_LALT , KC_LCTRL , KC_LSFT , /**/ KC_ENT  , MT_CMD_SPC , KC_LALT , XXXXXXX , WORKMAN
+	     KC_ESC  , KC_Q     , KC_W     , KC_E       , KC_R     , KC_T          ,                      /**/                        KC_Y          , KC_U    , KC_I   , KC_O    , KC_P        , KC_BSPC ,
+	     KC_TAB  , LT_NUM_A , LT_NAV_S , LT_DEV_D   , LT_SYM_F , LT_KITTY_G    ,                      /**/                        KC_H          , KC_J    , KC_K   , KC_L    , LT_DEV_SCLN , KC_QUOT ,
+	     KC_RALT , KC_Z     , KC_X     , KC_C       , KC_V     , KC_B          , XXXXXXX  , XXXXXXX , /**/ XXXXXXX , XXXXXXX    , KC_N          , KC_M    , KC_DOT , KC_UNDS , KC_SLSH     , XXXXXXX ,
+                                         KC_KB_MUTE , XXXXXXX  , LCTL(KC_LSFT) , KC_LCTRL , KC_LSFT , /**/ KC_ENT  , MT_CMD_SPC , LGUI(KC_LSFT) , XXXXXXX , WORKMAN
     ),
 
     [_WORKMAN] = LAYOUT(
@@ -80,17 +83,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_SYM] = LAYOUT(
-	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     LGUI(KC_LEFT)  , KC_LCBR , KC_RCBR , KC_MINS , KC_SLSH , _______ ,
-	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     LGUI(KC_RIGHT) , KC_LPRN , KC_RPRN , KC_COMM , KC_COLN , _______ ,
+	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     G_TAB_LEFT     , KC_LCBR , KC_RCBR , KC_MINS , KC_SLSH , _______ ,
+	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     G_TAB_RIGHT    , KC_LPRN , KC_RPRN , KC_COMM , KC_COLN , _______ ,
 	     _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , LGUI(KC_GRV)   , KC_LBRC , KC_RBRC , _______ , _______ , _______ ,
                                        _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______        , _______ , _______
     ),
 
     [_SYM_KITTY] = LAYOUT(
-	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     LSFT(LCTL(KC_LEFT))  , KC_LCBR , KC_RCBR , KC_MINS , KC_SLSH , _______ ,
-	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     LSFT(LCTL(KC_RIGHT)) , KC_LPRN , KC_RPRN , KC_COMM , KC_COLN , _______ ,
-	     _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , LGUI(KC_GRV)         , KC_LBRC , KC_RBRC , _______ , _______ , _______ ,
-                                       _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______              , _______ , _______
+	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     G_TAB_LEFT  , _______ , _______ , _______ , _______ , _______ ,
+	     _______ , _______ , _______ , _______ , _______ , _______ ,                     /**/                     G_TAB_RIGHT , _______ , _______ , _______ , _______ , _______ ,
+	     _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______     , _______ , _______ , _______ , _______ , _______ ,
+                                       _______ , _______ , _______ , _______ , _______ , /**/ _______ , _______ , _______     , _______ , _______
     ),
 
     // [_LAYER] = LAYOUT(
